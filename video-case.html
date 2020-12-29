@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="https://vjs.zencdn.net/7.10.2/video-js.css">
+  <script src="https://vjs.zencdn.net/7.10.2/video.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.js"></script>
+</head>
+<body>
+
+<!--
+  Don't use the "5-unsafe" CDN version in your own code. It will break on you.
+  Instead go to videojs.com and copy the CDN urls for the latest version.
+-->
+
+<video id="my_video_1" class="video-js vjs-default-skin" width="400px" height="300px"
+       controls preload autoplay="muted" muted
+     >
+  <source src="https://vjs.zencdn.net/v/oceans.mp4" type='video/mp4' />
+  <source src="https://vjs.zencdn.net/v/oceans.webm" type='video/webm' />
+</video>
+  <div>
+    <button id="refresh">caputure</button>
+  </div>
+<div class="caputure-content">
+  <div>canvas caputure：</div>
+</div>
+
+</body>
+</html>
+<script>
+  const $refresh=document.querySelector('#refresh')
+  var player = videojs(document.querySelector('.video-js'), null,function(){
+console.log('ready')
+  })
+  const caputure=function(){
+    html2canvas(document.querySelector('.video-js'),{}).then(canvas => {
+      document.querySelector('.caputure-content').appendChild(canvas)
+    })
+  }
+  player.on('playing',function () {
+    console.log('playing')
+    setTimeout(()=>{
+      caputure()
+    },1000)
+  })
+  $refresh.onclick=function () {
+    caputure()
+  }
+
+
+
+</script>
