@@ -3,6 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+  </style>
   <link rel="stylesheet" href="https://vjs.zencdn.net/7.10.2/video-js.css">
   <script src="https://vjs.zencdn.net/7.10.2/video.min.js"></script>
   <script src="https://cdn.bootcdn.net/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.js"></script>
@@ -18,10 +24,10 @@
        controls preload autoplay="muted" muted
      >
   <source src="https://songjuxin.github.io/videojs-exmpale/movie.mp4" type='video/mp4' />
- 
 </video>
   <div>
-    <button id="refresh">caputure</button>
+    <button id="caputure">caputure</button>
+    <button id="caputure2">caputure x2</button>
   </div>
 <div class="caputure-content">
   <div>canvas caputure：</div>
@@ -30,12 +36,18 @@
 </body>
 </html>
 <script>
-  const $refresh=document.querySelector('#refresh')
+  const $caputure=document.querySelector('#caputure')
+  const $caputure2=document.querySelector('#caputure2')
   var player = videojs(document.querySelector('.video-js'), null,function(){
 console.log('ready')
   })
-  const caputure=function(){
-    html2canvas(document.querySelector('.video-js'),{}).then(canvas => {
+  const caputure=function(scale){
+    html2canvas(document.querySelector('.video-js'),).then(canvas => {
+      if(scale==2){
+        canvas.style.width='800px'
+        canvas.style.height='600px'
+      }
+
       document.querySelector('.caputure-content').appendChild(canvas)
     })
   }
@@ -45,8 +57,11 @@ console.log('ready')
       caputure()
     },1000)
   })
-  $refresh.onclick=function () {
-    caputure()
+  $caputure.onclick=function () {
+    caputure(1)
+  }
+  $caputure2.onclick=function () {
+    caputure(2)
   }
 
 
